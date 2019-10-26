@@ -5,67 +5,86 @@
 'use strict';
 var buttonLog = [];
 var clickCount = 0;
+var showAlert = true;
 
+window.onload = function() {
+    chrome.storage.local.get(["buttonLogStorage"], function(result) {
+        var buttonLogStorage = result.buttonLogStorage;
+        console.log(buttonLogStorage);
+        if (buttonLogStorage != NaN && buttonLogStorage != undefined) {
+            buttonLog = buttonLogStorage;
+        }
+    });
 
-function clickCounter(buttonID){
-  load();
-  clickCount++;
-  console.log("Clicked!");
-  if (clickCount >= 5){
-    console.log("That was click number "+clickCount+"!");
-    alert("That was click number "+clickCount+"!");
-  }
-  buttonLog.push(buttonID);
-  unload();
+    chrome.storage.local.get(["clickCountStorage"], function(result) {
+        var clickCountStorage = result.clickCountStorage;
+        console.log(clickCountStorage);
+        if (clickCountStorage != NaN && clickCountStorage != undefined) {
+            clickCount = clickCountStorage;
+        }
+    });
+    chrome.storage.local.get(["showAlertStorage"], function(result) {
+        var showAlertStorage = result.showAlertStorage;
+        console.log(showAlertStorage);
+        if (showAlertStorage != NaN && showAlertStorage != undefined) {
+            showAlert = showAlertStorage;
+        }
+    });
+    console.log("Loaded");
 }
 
-function load(){
-  chrome.storage.local.get("buttonLog", callback);
+function clickCounter(buttonID) {
+    document.getElementById(buttonID).disabled = true;
+    clickCount++;
+    console.log("Clicked!");
+    if (clickCount >= 5 && showAlert == true) {
+        console.log("That was click number " + clickCount + "!");
+        alert("That was click number " + clickCount + "!");
+    }
+    buttonLog.push(buttonID);
 
-function callback(result) {
-  buttonLog = result.buttonLog;
-}
-console.log("Got buttonLog");
-
-chrome.storage.local.get("clickCount", callback);
-
-function callback(result) {
-  clickCount = result.clickCount;
-}
-console.log("Got clickCount");
+    storeValues(buttonID);
 }
 
-function unload(){
-  chrome.storage.local.set({"buttonLog": buttonLog});
-  chrome.storage.local.set({"clickCount": clickCount});
+function storeValues(buttonID) {
+    chrome.storage.local.set({ "buttonLogStorage": buttonLog });
+    chrome.storage.local.set({ "clickCountStorage": clickCount }, function(result) {
+        if (buttonID != undefined) {
+            document.getElementById(buttonID).disabled = false;
+        }
+        chrome.storage.local.set({ "showAlertStorage": showAlert });
+    });
 }
 
 myButton.onclick = function() {
-  clickCounter("myButton");
+    clickCounter("myButton");
 };
 
 myButton2.onclick = function() {
-  clickCounter("myButton2");
+    clickCounter("myButton2");
 };
 
 logButton.onclick = function() {
-  console.log(buttonLog);
-  alert("Buttons Clicked: "+buttonLog);
+    console.log(buttonLog);
+    alert("Buttons Clicked: " + buttonLog);
 };
 
+countButton.onclick = function() {
+    console.log(clickCount);
+    alert("Times Clicked: " + clickCount);
+};
 
-
-
-
-/*
-window.load = function() {
-console.log("Loaded!");
+resetButton.onclick = function() {
+    buttonLog = [];
+    clickCount = 0;
+    storeValues();
 }
 
-window.onbeforeunload = function() {
-  alert("Goodbye");
+toggleAlertButton.onclick = function() {
+    showAlert = !showAlert;
+    storeValues();
 }
-*/
+
 
 
 
