@@ -14,6 +14,8 @@ window.onload = function() {
         if (buttonLogStorage != NaN && buttonLogStorage != undefined) {
             buttonLog = buttonLogStorage;
         }
+        document.getElementById("toggleAlertButton").textContent = "Alerts Shown: " + showAlert;
+
     });
 
     chrome.storage.local.get(["clickCountStorage"], function(result) {
@@ -82,6 +84,7 @@ resetButton.onclick = function() {
 
 toggleAlertButton.onclick = function() {
     showAlert = !showAlert;
+    document.getElementById("toggleAlertButton").textContent = "Alerts Shown: " + showAlert;
     storeValues();
 }
 
