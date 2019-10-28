@@ -6,6 +6,9 @@
 var buttonLog = [];
 var clickCount = 0;
 var showAlert = true;
+var searchText;
+var searchTerm;
+var results;
 
 window.onload = function() {
     chrome.storage.local.get(["buttonLogStorage"], function(result) {
@@ -14,8 +17,6 @@ window.onload = function() {
         if (buttonLogStorage != NaN && buttonLogStorage != undefined) {
             buttonLog = buttonLogStorage;
         }
-        document.getElementById("toggleAlertButton").textContent = "Alerts Shown: " + showAlert;
-
     });
 
     chrome.storage.local.get(["clickCountStorage"], function(result) {
@@ -32,7 +33,10 @@ window.onload = function() {
             showAlert = showAlertStorage;
         }
     });
+    console.log(showAlert);
+    document.getElementById("toggleAlertButton").textContent = "Alerts Shown: " + showAlert;
     console.log("Loaded");
+
 }
 
 function clickCounter(buttonID) {
@@ -56,6 +60,11 @@ function storeValues(buttonID) {
         }
         chrome.storage.local.set({ "showAlertStorage": showAlert });
     });
+}
+
+function searchString(stringToSearch, searchTerm) {
+    var re = new RegExp(searchTerm, 'g');
+    return (stringToSearch.match(re));
 }
 
 myButton.onclick = function() {
@@ -88,7 +97,14 @@ toggleAlertButton.onclick = function() {
     storeValues();
 }
 
-
+searchButton.onclick = function() {
+    searchText = prompt("Enter text to search through").toLowerCase();
+    searchText = searchText.toLowerCase();
+    searchTerm = prompt("Enter a search term").toLowerCase();
+    results = searchString(searchText, searchTerm);
+    console.log(results);
+    alert("Found " + results.length + " Results");
+}
 
 
 
