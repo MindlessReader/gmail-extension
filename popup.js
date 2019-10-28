@@ -106,7 +106,11 @@ searchButton.onclick = function() {
     alert("Found " + results.length + " Results");
 }
 
-
+testButton.onclick = function() {
+    chrome.tabs.executeScript({
+        code: 'alert("This is an alert from the main tab");'
+      });
+}
 
 
 /*
