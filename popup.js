@@ -108,13 +108,15 @@ searchButton.onclick = function() {
 
 testButton.onclick = function() {
     chrome.tabs.executeScript({
-        code: 'alert("Hi"); alert("How are you?");var emailAddress = getElementById(dhContent);chrome.storage.local.set({ "emailAddressStorage": emailAddress });'
+        code: 'alert("Hi"); alert("How are you?");var emailAddress = "emailAddressString";'
     });
     chrome.storage.local.get(["emailAddressStorage"], function(result) {
         var emailAddressStorage = result.emailAddressStorage;
         console.log(emailAddressStorage);
         if (emailAddressStorage != NaN && emailAddressStorage != undefined) {
             var emailAddress = emailAddressStorage;
+        } else {
+            var emailAddress = "blank";
         }
         alert(emailAddress);
     });
