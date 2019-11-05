@@ -9,6 +9,7 @@ var showAlert = true;
 var searchText;
 var searchTerm;
 var results;
+var email;
 
 window.onload = function() {
     chrome.storage.local.get(["buttonLogStorage"], function(result) {
@@ -106,22 +107,23 @@ searchButton.onclick = function() {
     alert("Found " + results.length + " Results");
 }
 
-testButton.onclick = function() {
-    chrome.tabs.executeScript({
-        code: 'alert("Hi"); alert("How are you?");var emailAddress = "emailAddressString";'
-    });
-    chrome.storage.local.get(["emailAddressStorage"], function(result) {
-        var emailAddressStorage = result.emailAddressStorage;
-        console.log(emailAddressStorage);
-        if (emailAddressStorage != NaN && emailAddressStorage != undefined) {
-            var emailAddress = emailAddressStorage;
-        } else {
-            var emailAddress = "blank";
+test2.onclick = function() {
+    chrome.storage.local.get(["emailStorage"], function(result) {
+        var emailStorage = result.emailStorage;
+        console.log(emailStorage[0]);
+        if (emailStorage != NaN && emailStorage != undefined) {
+            email = emailStorage;
         }
-        alert(emailAddress);
     });
+    alert(email[0]);
 }
 
+
+/*
+chrome.tabs.executeScript({
+        code: 'alert("Hi"); alert("How are you?");var emailAddress = "emailAddressString";'
+    });
+    */
 
 
 
@@ -142,3 +144,5 @@ function callback(result) {
   buttonlog = result.buttonLog;
 }
 */
+
+
