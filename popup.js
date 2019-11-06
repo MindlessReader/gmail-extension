@@ -9,7 +9,7 @@ var showAlert = true;
 var searchText;
 var searchTerm;
 var results;
-var email;
+var email  =  [];
 
 window.onload = function() {
     chrome.storage.local.get(["buttonLogStorage"], function(result) {
@@ -108,6 +108,21 @@ searchButton.onclick = function() {
 }
 
 test2.onclick = function() {
+    chrome.tabs.create({ url: chrome.runtime.getURL("options.html") });
+}
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      console.log(sender.tab ?
+                  "from a content script:" + sender.tab.url :
+                  "from the extension");
+      if (request.greeting == "hello")
+        sendResponse({farewell: "goodbye"});
+    });
+
+
+/*
+test2.onclick = function() {
     chrome.storage.local.get(["emailStorage"], function(result) {
         var emailStorage = result.emailStorage;
         console.log(emailStorage[0]);
@@ -117,8 +132,7 @@ test2.onclick = function() {
     });
     alert(email[0]);
 }
-
-
+*/
 /*
 chrome.tabs.executeScript({
         code: 'alert("Hi"); alert("How are you?");var emailAddress = "emailAddressString";'

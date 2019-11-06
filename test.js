@@ -10,7 +10,7 @@ document.getElementById("test").addEventListener('click', () => {
 
     //We have permission to access the activeTab, so we can call chrome.tabs.executeScript:
     chrome.tabs.executeScript({
-        code: 'var email = document.getElementsByClassName("gb_hb");console.log(email[0]);chrome.storage.local.set({ "emailStorage": email[0] });        ' //argument here is a string but function.toString() returns function's code
+        code: 'var email = document.getElementsByClassName("gb_hb");console.log(email[0]);chrome.runtime.sendMessage({greeting: email[0]}, function(response) {console.log(response.farewell);});' //argument here is a string but function.toString() returns function's code
     }, (results) => {
         //Here we have just the innerHTML and not DOM structure
          //console.log('Popup script:')
