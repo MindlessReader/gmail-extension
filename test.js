@@ -20,5 +20,6 @@
 //
 ////class gb_hb
 ////(' + modifyDOM + ')();
+var email = document.getElementsByClassName("gb_kb");
 
-alert("hi");
+alert(email[0]);
