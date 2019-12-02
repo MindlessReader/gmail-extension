@@ -7,6 +7,7 @@
 //chrome.storage.local.set({"buttonLog": buttonLog});
 
 
+
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.set({ color: '#3aa757' }, function() {
         console.log('The color is green.');
@@ -14,9 +15,20 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [new chrome.declarativeContent.PageStateMatcher({
-                //pageUrl: {hostEquals: 'developer.chrome.com'},
+                pageUrl: { hostEquals: 'mail.google.com' },
             })],
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }]);
     });
+});
+
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    // read changeInfo data and do something with it (like read the url)
+    if (changeInfo.url != "https://mail.google.com/mail/u/0/#inbox" && changeInfo.url != "https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" && changeInfo.url) {
+        console.log("Not Inbox");
+        chrome.tabs.executeScript({
+            file: 'test.js'
+        });
+    }
 });
