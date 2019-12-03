@@ -35,7 +35,9 @@ function defined(variable){
 }
 
 setTimeout(function() {
-    var spamScore = 1;
+    var spamScoreCom = 1;
+    var spamScoreRom = 1;
+    var spamScoreExt = 1;
     var blacklistedEmail = false;
     var counter = 0;
     var email = document.getElementsByClassName("gb_ob")[0].innerHTML;
