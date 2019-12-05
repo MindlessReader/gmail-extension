@@ -39,11 +39,13 @@ setTimeout(function() {
     var spamScoreRom = 1;
     var spamScoreExt = 1;
     var blacklistedEmail = false;
+    var whitelistedEmail  = false;
     var counter = 0;
     var email = document.getElementsByClassName("gb_ob")[0].innerHTML;
     var body = document.getElementsByClassName("ii gt")[0].innerHTML.toLowerCase();
     var incEmail = document.getElementsByClassName("go")[0].textContent;
     var blacklistedEmails = ["1000059152@tvusd.us"];
+    var whitelistedEmails = ["fabian@thevks.com"];
     var suspiciousWordsCom = ["communism", "communist", "communists", "communistic"]; //Communism
     var suspiciousWordsRom = ["communism", "communist", "communists", "communistic"]; //Romantic
     var suspiciousWordsExt = ["password", "malware", "vulnerability", "critical vulnerability",
@@ -91,11 +93,19 @@ setTimeout(function() {
     blacklistedEmails.forEach(element => {
         if (element == incEmail) {
             blacklistedEmail = true;
+            console.log("blacklisted");
+        }
+    });
+
+    whitelistedEmails.forEach(element => {
+        if (element == incEmail) {
+            whitelistedEmail = true;
+            console.log("whitelisted");
         }
     });
 
     console.log(spamScore);
-    if (blacklistedEmail == true) {
+    if (blacklistedEmail == true && whitelistedEmail == false) {
         alert("We detected that this email came from a blacklisted source, either a known spam address, or someone impersonating your own email address.\nSpam Score: " + spamScore);
     } else if (spamScore >= 1000) {
         alert("This email is likely spam!\nSpam Score: " + spamScore);
