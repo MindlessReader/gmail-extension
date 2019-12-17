@@ -1,37 +1,85 @@
-<!DOCTYPE html>
-<html>
+<!--CSS-->
 
 <head>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
+            margin: 0;
             height: 300px;
             width: 600px;
         }
-    </style>
-</head>
-
-</html>
-<html>
-
-<head>
-    <style>
-        button {
-            height: 30px;
-            min-width: 30px;
-            max-width: 250px;
-            outline: none;
-            background-color: chocolate;
-            color:rgb(255, 255, 255);
+        
+        .form {
+            border-radius: 3px;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .button {
+            width: 50;
+            margin: 15px 0;
+            background-color: #785580;
+            border: none;
+            color: #fff;
+            border-radius: 2px;
+            padding: 7px 10px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        
+        .row {
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            flex-wrap: nowrap;
+            padding: 10px;
+        }
+        
+        .cell {
+            min-height: 75px;
+            width: 100;
+        }
+        
+        @media (max-width: 768px) {
+            .row {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 
-<body>
-    <button id="whitelistButton">Add whitelisted email addresses</button>
-    <script src="popup.js"></script>
-    
-    <button id="reportButton">Report email as spam</button>
-    <script src="popup.js"></script>
-</body>
 
-</html>
+<!--HTML-->
+<form class="form">
+    <div class="form-group">
+    </div>
+    <div class="form-group">
+    </div>
+    <div class="row">
+        <div class="cell" id="i812">
+            <button class="button" id="myButton">Button</button>
+            <script src="popup.js"></script>
+        </div>
+        <div class="cell" id="ibma">
+            <button class="button">Send</button>
+        </div>
+        <div class="cell">
+            <button class="button">Send</button>
+        </div>
+        <div class="cell">
+            <button class="button">Send</button>
+        </div>
+        <div class="cell">
+            <button class="button">Send</button>
+        </div>
+        <div class="cell">
+        </div>
+        <div class="cell" id="ippv">
+        </div>
+        <div class="cell">
+        </div>
+    </div>
+</form>
