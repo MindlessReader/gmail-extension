@@ -10,8 +10,27 @@ function defined(variable) {
         return false;
     }
 }
+//Settings
+var activeSettings;
+var alertsOn;
+var linksOn;
+var blacklistedEmails;
+var whitelistedEmails;
 
-//setTimeout(function() {
+chrome.storage.local.get(["settingsStorage"], function(result) {
+    var settingsStorage = result.settingsStorage;
+    console.log(settingsStorage);
+    if (defined(settingsStorage)) {
+        activeSettings = settingsStorage;
+        alertsOn = activeSettings[0];
+        linksOn = activeSettings[1];
+        blacklistedEmails = activeSettings[2];
+        whitelistedEmails = activeSettings[3];
+    }
+    scamScript();
+});
+
+//Other Variables
 var spamScore = [ //Format: Initial Value, Type, URL
     [5, "Communist", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/communist"],
     [5, "Romantic", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/romance-scams"],
@@ -1071,7 +1090,8 @@ var commonWords = [
     " neck "
 ];
 
-
+function scamScript() {
+//Remove common words from body
 commonWords.forEach(element => {
     var re = new RegExp(element, "g");
     if (defined(body.match(re))) {
@@ -1082,9 +1102,12 @@ commonWords.forEach(element => {
 
 console.log(body);
 
+//Format Incoming Email Address
 incEmail = incEmail.slice(1, incEmail.length - 1);
+//Add user email address to personal blacklist
 blacklistedEmails.push(email);
 
+//Check for suspicious words
 suspiciousWords.forEach(element => {
     var word = element[0];
     var rating = element[2];
@@ -1094,6 +1117,7 @@ suspiciousWords.forEach(element => {
     }
 });
 
+//Check incoming email address against blacklist
 blacklistedEmails.forEach(element => {
     if (element == incEmail) {
         blacklistedEmail = true;
@@ -1101,6 +1125,7 @@ blacklistedEmails.forEach(element => {
     }
 });
 
+//Check incoming email address against whitelist
 whitelistedEmails.forEach(element => {
     if (element == incEmail) {
         whitelistedEmail = true;
@@ -1110,19 +1135,16 @@ whitelistedEmails.forEach(element => {
 
 console.log(spamScore);
 
-if (!whitelistedEmail) {
+//Send alerts
+if (!whitelistedEmail && alertsOn) {
     spamScore.forEach(element => {
-        if (element[0] >= 1000) {
-            if (
-                confirm(
-                    "This email is likely a(n) " +
-                    element[1] +
-                    ' Scam email!\n Click "OK" to learn more about this type of scam'
-                )
-            ) {
+        if (element[0] >= 1000 && linksOn) {
+            if (confirm("This email is likely a(n) " + element[1] + ' Scam email!\n Click "OK" to learn more about this type of scam')) {
                 window.open(element[2]);
             }
+        } else if (element[0] >= 1000){
+            alert("This email is likely a(n) " + element[1] + ' Scam email!');
         }
     });
 }
-//}, 0);
+}

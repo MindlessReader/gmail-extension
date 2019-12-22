@@ -11,11 +11,11 @@
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "128": "images/scamFilter128.png"
+            "300": "images/scamFilter300Cropped.png"
         }
     },
     "icons": {
-        "128": "images/scamFilter128.png"
+        "300": "images/scamFilter300Cropped.png"
     },
     "manifest_version": 2,
     "content_scripts": [{
