@@ -1,12 +1,12 @@
 {
-    "name": "My Chrome Extension",
-    "version": "1.0",
-    "description": "Build an Extension!",
+    "name": "ScamNet Email Extension for Gmail",
+    "version": "1.0.0",
+    "description": "The ScamNet Email Extension for Gmail on Google Chrome",
     "permissions": ["activeTab", "tabs", "declarativeContent", "storage", "notifications"],
     "options_page": "options.html",
     "background": {
         "scripts": ["background.js"],
-        "persistent": false
+        "persistent": true
     },
     "page_action": {
         "default_popup": "popup.html",
