@@ -32,7 +32,7 @@ chrome.storage.local.get(["settingsStorage"], function(result) {
 
 //Other Variables
 var spamScore = [ //Format: Initial Value, Type, URL
-    [5, "Communist", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/communist"],
+    [5, "Communist", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/communist-scams"],
     [5, "Romantic", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/romance-scams"],
     [5, "Extortion", "https://sites.google.com/my.tvusd.k12.ca.us/spamfilter/threats-scams/extortion"]
 ];
