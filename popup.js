@@ -60,7 +60,7 @@ webLinkButton.onclick = function() {
     });}
 
 reportButton.onclick = function() {
-    alert("Report Button");
+    alert("Last Viewed Email Reported");
 }
 
 linkCheck.onclick = function() {
